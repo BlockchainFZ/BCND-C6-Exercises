@@ -22,11 +22,11 @@ contract ExerciseC6CApp  {
     }
 
     constructor
-                                (
-                                )
-                                public
+                                (address dataContract) public
     {
         contractOwner = msg.sender;
+        exerciseC6C = ExerciseC6C(dataContract);
+
     }
 
     function calculateBonus
@@ -78,7 +78,7 @@ contract ExerciseC6CApp  {
 
                                 )
                                 external
-                                
+
     {
 
     }
