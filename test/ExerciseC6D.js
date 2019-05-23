@@ -27,18 +27,20 @@ contract('ExerciseC6D', async (accounts) => {
 
 
   it('can register oracles', async () => {
-    
+
     // ARRANGE
     let fee = await config.exerciseC6D.REGISTRATION_FEE.call();
 
     // ACT
-    for(let a=1; a<TEST_ORACLES_COUNT; a++) {      
+    for(let a=1; a<TEST_ORACLES_COUNT; a++) {
       await config.exerciseC6D.registerOracle({ from: accounts[a], value: fee });
+      let result = config.exerciseC6D.getOracle(accounts[a]);
+      console.log(`Oracle Registered: ${result[0].toNumber()},${result[1].toNumber()},${result[2].toNumber()}`);
     }
   });
 
   it('can request flight status', async () => {
-    
+
     // ARRANGE
     let flight = 'ND1309'; // Course number
     let timestamp = Math.floor(Date.now() / 1000);
@@ -66,7 +68,7 @@ contract('ExerciseC6D', async (accounts) => {
           await config.exerciseC6D.submitOracleResponse(oracleIndexes[idx], flight, timestamp, 10, { from: accounts[a] });
 
           // Check to see if flight status is available
-          // Only useful while debugging since flight status is not hydrated until a 
+          // Only useful while debugging since flight status is not hydrated until a
           // required threshold of oracles submit a response
           //let flightStatus = await config.exerciseC6D.viewFlightStatus(flight, timestamp);
           //console.log('\nPost', idx, oracleIndexes[idx].toNumber(), flight, timestamp, flightStatus);
@@ -83,5 +85,5 @@ contract('ExerciseC6D', async (accounts) => {
   });
 
 
- 
+
 });
