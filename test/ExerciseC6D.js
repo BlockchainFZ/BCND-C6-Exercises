@@ -8,7 +8,15 @@ contract('ExerciseC6D', async (accounts) => {
   var config;
   before('setup contract', async () => {
     config = await Test.Config(accounts);
-
+    console.log(`Accounts = `, accounts[0]);
+    console.log(`Accounts = `, accounts[1]);
+    console.log(`Accounts = `, accounts[2]);
+    console.log(`Accounts = `, accounts[3]);
+    console.log(`Accounts = `, accounts[4]);
+    console.log(`Accounts = `, accounts[5]);
+    console.log(`Accounts = `, accounts[6]);
+    console.log(`Accounts = `, accounts[7]);
+    console.log(`Accounts = `, accounts[8]);
     // Watch contract events
     const ON_TIME = 10;
     let events = config.exerciseC6D.allEvents();
@@ -34,8 +42,9 @@ contract('ExerciseC6D', async (accounts) => {
     // ACT
     for(let a=1; a<TEST_ORACLES_COUNT; a++) {
       await config.exerciseC6D.registerOracle({ from: accounts[a], value: fee });
-      let result = config.exerciseC6D.getOracle(accounts[a]);
-      console.log(`Oracle Registered: ${result[0].toNumber()},${result[1].toNumber()},${result[2].toNumber()}`);
+      let result = await config.exerciseC6D.getOracle.call(accounts[a]);
+      console.log(`Oracle Registered: ${result[0]}`);
+
     }
   });
 
